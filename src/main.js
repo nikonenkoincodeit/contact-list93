@@ -1,6 +1,7 @@
 import { formEl, contactsContainerEl } from "./refs";
-import { serviceWriteData, getData } from "./api";
+import { serviceWriteData, getData, deleteData} from "./api";
 import { createCard } from "./markup";
+
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
@@ -35,4 +36,19 @@ function onLoad() {
 
 function addMarkUp(markup) {
   contactsContainerEl.insertAdjacentHTML("beforeend", markup);
+}
+
+contactsContainerEl.addEventListener('click', deleteCard);
+
+function deleteCard(evt) {
+if(!evt.target.classList.contains('btn-close')){
+  return;
+}
+const parentEl = evt.target.closest('.js-wrap-card');
+const cardId =  parentEl.dataset.cardid;
+deleteData(cardId)
+.then(() => {
+  parentEl.remove()
+})
+.catch((err) => console.log(err))
 }

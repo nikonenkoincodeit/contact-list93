@@ -54,4 +54,20 @@ async function getData() {
   return resp.json();
 }
 
-export { serviceWriteData, getData };
+
+
+function deleteData (id){
+  const options = {
+    method: "DELETE"
+  };
+  return fetch(`${BASE_URL}/${id}`, options)
+  .then((resp) => {
+    if (!resp.ok) {
+      throw new Error(
+        resp.statusText || `Unknown Error. Response status ${resp.status}`
+      );
+    }
+    return resp.json();
+  } )
+};
+export { serviceWriteData, getData, deleteData };
