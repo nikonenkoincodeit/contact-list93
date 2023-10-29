@@ -1,7 +1,7 @@
 {
   "contacts": [
     {
-      "name": "Igor",
+      "name": "Igor 1235456",
       "number": "+3805656545888",
       "email": "pavel@gmail.com",
       "createdAt": 1676193108450,
@@ -27,6 +27,13 @@
       "email": "dasd@gmail.copm",
       "createdAt": 1679738851899,
       "id": "xJKz7U3"
+    },
+    {
+      "name": "vue",
+      "number": "60700.00",
+      "email": "alexandra.kravtsova@goit.ua",
+      "createdAt": 1698566966311,
+      "id": "uuQVNis"
     }
   ]
 }
