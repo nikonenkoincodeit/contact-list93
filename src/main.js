@@ -1,13 +1,14 @@
 import { formEl, contactsContainerEl } from "./refs";
-import { serviceWriteData, getData, deleteData} from "./api";
+import { serviceWriteData, getData, deleteData, changeName } from "./api";
 import { createCard } from "./markup";
-
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
 
 formEl.addEventListener("submit", onFormInput);
 window.addEventListener("load", onLoad);
+contactsContainerEl.addEventListener("click", deleteCard);
+contactsContainerEl.addEventListener("input", onEditing);
 
 function onFormInput(e) {
   e.preventDefault();
@@ -38,17 +39,23 @@ function addMarkUp(markup) {
   contactsContainerEl.insertAdjacentHTML("beforeend", markup);
 }
 
-contactsContainerEl.addEventListener('click', deleteCard);
-
 function deleteCard(evt) {
-if(!evt.target.classList.contains('btn-close')){
-  return;
+  if (!evt.target.classList.contains("btn-close")) {
+    return;
+  }
+  const parentEl = evt.target.closest(".js-wrap-card");
+  const cardId = parentEl.dataset.cardid;
+  deleteData(cardId)
+    .then(() => {
+      parentEl.remove();
+    })
+    .catch((err) => console.log(err));
 }
-const parentEl = evt.target.closest('.js-wrap-card');
-const cardId =  parentEl.dataset.cardid;
-deleteData(cardId)
-.then(() => {
-  parentEl.remove()
-})
-.catch((err) => console.log(err))
+
+function onEditing(e) {
+  const parentEl = e.target.closest(".js-wrap-card");
+  const cardId = parentEl.dataset.cardid;
+  const text = e.target.textContent;
+  changeName(cardId, text);
+  console.log(text);
 }

@@ -54,20 +54,35 @@ async function getData() {
   return resp.json();
 }
 
-
-
-function deleteData (id){
+function deleteData(id) {
   const options = {
-    method: "DELETE"
+    method: "DELETE",
   };
-  return fetch(`${BASE_URL}/${id}`, options)
-  .then((resp) => {
+  return fetch(`${BASE_URL}/${id}`, options).then((resp) => {
     if (!resp.ok) {
       throw new Error(
         resp.statusText || `Unknown Error. Response status ${resp.status}`
       );
     }
     return resp.json();
-  } )
-};
-export { serviceWriteData, getData, deleteData };
+  });
+}
+
+async function changeName(id, text) {
+  const options = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: text }),
+  };
+
+  const resp = await fetch(`${BASE_URL}/${id}`, options);
+
+  if (!resp.ok) {
+    throw new Error(
+      resp.statusText || `Unknown Error. Response status ${resp.status}`
+    );
+  }
+  return resp.json();
+}
+
+export { serviceWriteData, getData, deleteData, changeName };
