@@ -15,3 +15,12 @@ export function saveData(bodyData) {
     return result.json();
   });
 }
+
+export function dataClient() {
+  return fetch(BASE_URL).then((result) => {
+    if (!result.ok) {
+      throw new Error(result.statusText || result.status);
+    }
+    return result.json();
+  });
+}
