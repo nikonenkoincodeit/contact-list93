@@ -23,10 +23,13 @@ function deleteCard(evt) {
 }
 
 function changeCard(evt) {
-  const idCard = evt.target.closest(".js-wrap-card").dataset.cardid;
-  const nameData = evt.target.textContent;
-
-  changeData(idCard, nameData);
+  try {
+    const idCard = evt.target.closest(".js-wrap-card").dataset.cardid;
+    const nameData = evt.target.textContent;
+    changeData(idCard, nameData);
+  } catch (error) {
+    console.log("Server response error when changing a card", error.message);
+  }
 }
 
 initData();
