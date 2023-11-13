@@ -1,9 +1,33 @@
-import { formEl, contactEl } from "./refs";
-import { saveData, getData } from "./api";
+import { formEl, contactEl, cardContainerEl } from "./refs";
+import { saveData, getData, deleteData, changeData } from "./api";
 import { createCard } from "./markup";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
+
+formEl.addEventListener("submit", submitForm);
+
+cardContainerEl.addEventListener("click", deleteCard);
+cardContainerEl.addEventListener("input", changeCard);
+
+function deleteCard(evt) {
+  if (!evt.target.classList.contains("btn-close")) return;
+  const idCard = evt.target.closest(".js-wrap-card").dataset.cardid;
+
+  try {
+    deleteData(idCard);
+    evt.target.closest(".js-wrap-card").remove();
+  } catch (error) {
+    console.log("Server response error when deleting a card", error.message);
+  }
+}
+
+function changeCard(evt) {
+  const idCard = evt.target.closest(".js-wrap-card").dataset.cardid;
+  const nameData = evt.target.textContent;
+
+  changeData(idCard, nameData);
+}
 
 initData();
 
@@ -28,8 +52,6 @@ async function initData() {
 function renderMarkup(markup) {
   contactEl.insertAdjacentHTML("beforeend", markup);
 }
-
-formEl.addEventListener("submit", submitForm);
 
 async function submitForm(evt) {
   evt.preventDefault();

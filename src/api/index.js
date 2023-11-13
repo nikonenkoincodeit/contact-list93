@@ -6,6 +6,7 @@ export async function saveData(bodyData) {
   // нужно ли в этом блоке добавлять трай-кетч, или ошибка прокинется в трай-кетч функции которая вызывает saveData?
   const response = await axios.post(BASE_URL, bodyData);
   return response.data;
+
   // const data = {
   //   method: "POST",
   //   headers: {
@@ -31,4 +32,14 @@ export async function getData() {
   //   }
   //   return result.json();
   // });
+}
+
+export function deleteData(id) {
+  axios.delete(BASE_URL + id);
+}
+
+export function changeData(id, nameData) {
+  axios.patch(BASE_URL + id, {
+    name: nameData,
+  });
 }
