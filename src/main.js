@@ -10,23 +10,23 @@ formEl.addEventListener("submit", submitForm);
 cardContainerEl.addEventListener("click", deleteCard);
 cardContainerEl.addEventListener("input", changeCard);
 
-function deleteCard(evt) {
-  if (!evt.target.classList.contains("btn-close")) return;
-  const idCard = evt.target.closest(".js-wrap-card").dataset.cardid;
-
+async function deleteCard(evt) {
   try {
-    deleteData(idCard);
+    if (!evt.target.classList.contains("btn-close")) return;
+    const idCard = evt.target.closest(".js-wrap-card").dataset.cardid;
+
+    await deleteData(idCard);
     evt.target.closest(".js-wrap-card").remove();
   } catch (error) {
     console.log("Server response error when deleting a card", error.message);
   }
 }
 
-function changeCard(evt) {
+async function changeCard(evt) {
   try {
     const idCard = evt.target.closest(".js-wrap-card").dataset.cardid;
     const nameData = evt.target.textContent;
-    changeData(idCard, nameData);
+    await changeData(idCard, nameData);
   } catch (error) {
     console.log("Server response error when changing a card", error.message);
   }

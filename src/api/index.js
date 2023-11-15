@@ -1,10 +1,9 @@
 import axios from "axios";
-
-const BASE_URL = "http://localhost:3000/contacts/";
+axios.defaults.baseURL = "http://localhost:3000/";
+const PATH_URL = "contacts/";
 
 export async function saveData(bodyData) {
-  // нужно ли в этом блоке добавлять трай-кетч, или ошибка прокинется в трай-кетч функции которая вызывает saveData?
-  const response = await axios.post(BASE_URL, bodyData);
+  const response = await axios.post(PATH_URL, bodyData);
   return response.data;
 
   // const data = {
@@ -23,9 +22,9 @@ export async function saveData(bodyData) {
 }
 
 export async function getData() {
-  // нужно ли в этом блоке добавлять трай-кетч, или ошибка прокинется в трай-кетч функции которая вызывает getData?
-  const response = await axios.get(BASE_URL);
+  const response = await axios.get(PATH_URL);
   return response.data;
+
   // return fetch(BASE_URL).then((result) => {
   //   if (!result.ok) {
   //     throw new Error(result.statusText || result.status);
@@ -34,12 +33,18 @@ export async function getData() {
   // });
 }
 
-export function deleteData(id) {
-  axios.delete(BASE_URL + id);
+export async function deleteData(id) {
+  await axios.delete(PATH_URL + id).then((response) => {
+    return response;
+  });
 }
 
-export function changeData(id, nameData) {
-  axios.patch(BASE_URL + id, {
-    name: nameData,
-  });
+export async function changeData(id, nameData) {
+  await axios
+    .patch(PATH_URL + id, {
+      name: nameData,
+    })
+    .then((response) => {
+      return response;
+    });
 }
